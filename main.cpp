@@ -12,7 +12,7 @@
 using namespace std;
 using namespace std::chrono;
 
-const int SETWIDTH = 15,ROWS = 4, COLUMNS = 3,ITERATIONS = 15;
+const int SETWIDTH = 15,ROWS = 4, COLUMNS = 3,ITERATIONS = 3; //Set to 3 to debug, change to 15 afterwards, 
 
 int averageRead(int input[],int size);
 
@@ -108,20 +108,48 @@ int main() {
         start = chrono::high_resolution_clock::now();
         set1.erase(its);
         end = high_resolution_clock::now();
-
-        list1.sort();
-        end = high_resolution_clock::now();
-        data[1][1][i]= duration_cast<microseconds>(end - start).count();
-        //set, can't sort a set.
-        data[1][2][i]= duration_cast<microseconds>(end - start).count();
-
-        data[3][2][i]= duration_cast<microseconds>(end - start).count();
     }
+    int averageRead[COLUMNS];
+    int averageTemp=0;
+    for(int j=0;j<COLUMNS;j++){
+        for(int i=0;i<ITERATIONS;i++){
+            averageTemp+=data[0][j][i];
+        }
+        averageRead[j] = averageTemp/ITERATIONS;
+    }
+    
+    int averageSort[COLUMNS];
+    averageTemp=0;
+    for(int j=0;j<COLUMNS;j++){
+        for(int i=0;i<ITERATIONS;i++){
+            averageTemp+=data[1][j][i];
+        }
+        averageSort[j] = averageTemp/ITERATIONS;
+    }
+    
+
+    int averageInsert[COLUMNS];
+    averageTemp=0;
+    for(int j=0;j<COLUMNS;j++){
+        for(int i=0;i<ITERATIONS;i++){
+            averageTemp+=data[2][j][i];
+        }
+        averageSort[j] = averageTemp/ITERATIONS;
+    }
+    
+
+    int averageDelete[COLUMNS];
+    averageTemp=0;
+    for(int j=0;j<COLUMNS;j++){
+        for(int i=0;i<ITERATIONS;i++){
+            averageTemp+=data[3][j][i];
+        }
+        averageSort[j] = averageTemp/ITERATIONS;
+  }
+
     cout<<"Number of simulations: "<<ITERATIONS<<endl;
     cout<<setw(SETWIDTH)<<"Vector"<<setw(SETWIDTH)<<"List"<<setw(SETWIDTH)<<"Set";
-    cout<<endl<<left<<setw(SETWIDTH)<<"Read:"<<(data[0][0][], ITERATIONS);
-
-
+    cout<<endl<<left<<setw(SETWIDTH)<<"Read:"<<averageRead[0]<<setw(SETWIDTH)<<averageRead[1]<<setw(SETWIDTH)<<averageRead[2]<<endl;
     return 0;
 }
 
@@ -132,11 +160,11 @@ int average(int input[],int size){
     }
     return sum/(size+1);
 }
-
+/*
 int averageRead(int input[],int size){
-    return average(input,size);
+    return average(input[],size);
 }
-
+*/
 /* syntax examples:
 auto start = high_resolution_clock::now()
 auto end = high_resolution_clock::now()
