@@ -14,6 +14,8 @@ using namespace std::chrono;
 
 const int SETWIDTH = 15,ROWS = 4, COLUMNS = 3,ITERATIONS = 15;
 
+int averageRead(int input[],int size);
+
 int main() {
     int data[ROWS][COLUMNS][ITERATIONS];   //make 3d arr
     set <string> set1;
@@ -54,7 +56,6 @@ int main() {
         
 
         //sorting ==============================================
-        cout<<endl<<left<<setw(SETWIDTH)<<"Sort:";
         //vector
         start = high_resolution_clock::now();
         sort(vector1.begin(), vector1.end());
@@ -70,7 +71,6 @@ int main() {
 
 
         //insert ==============================================
-        cout<<endl<<left<<setw(SETWIDTH)<<"Insert:";
         //vector
         start = chrono::high_resolution_clock::now();
         vector1.insert(vector1.begin(), vector1.size()/2, "insertedVal");
@@ -88,7 +88,6 @@ int main() {
         data[2][2][i]= duration_cast<microseconds>(end - start).count();
 
         //delete ==============================================
-        cout<<endl<<left<<setw(SETWIDTH)<<"Delete:";
         //vector
         auto itv = vector1.begin();
         advance(itv,vector1.size()/2);
@@ -120,7 +119,7 @@ int main() {
     }
     cout<<"Number of simulations: "<<ITERATIONS<<endl;
     cout<<setw(SETWIDTH)<<"Vector"<<setw(SETWIDTH)<<"List"<<setw(SETWIDTH)<<"Set";
-    cout<<endl<<left<<setw(SETWIDTH)<<"Read:"<<averageRead(data, ITERATIONS);
+    cout<<endl<<left<<setw(SETWIDTH)<<"Read:"<<(data[0][0][], ITERATIONS);
 
 
     return 0;
@@ -134,8 +133,8 @@ int average(int input[],int size){
     return sum/(size+1);
 }
 
-int averageRead(int input[][][],int size){
-    return 0;
+int averageRead(int input[],int size){
+    return average(input,size);
 }
 
 /* syntax examples:
