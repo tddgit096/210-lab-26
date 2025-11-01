@@ -12,12 +12,13 @@
 using namespace std;
 using namespace std::chrono;
 
-const int SETWIDTH = 15,ROWS = 4, COLUMNS = 3,ITERATIONS = 3; //Set to 3 to debug, change to 15 afterwards, 
+const int SETWIDTH = 15,OPERATIONS = 4, DATATYPES = 3,ITERATIONS = 3; //Set to 3 to debug, change to 15 afterwards, 
 
 int averageRead(int input[],int size);
 
 int main() {
-    int data[ROWS][COLUMNS][ITERATIONS];   //make 3d arr
+    int data[OPERATIONS][DATATYPES][ITERATIONS];   //make 3d arr
+    //our dataholders
     set <string> set1;
     vector <string> vector1;
     list <string> list1;
@@ -109,18 +110,24 @@ int main() {
         set1.erase(its);
         end = high_resolution_clock::now();
     }
-    int averageRead[COLUMNS];
+
+
+
+
+    int averageRead[DATATYPES];
     int averageTemp=0;
-    for(int j=0;j<COLUMNS;j++){
+    for(int j=0;j<DATATYPES;j++){
+        averageTemp=0;
         for(int i=0;i<ITERATIONS;i++){
             averageTemp+=data[0][j][i];
         }
         averageRead[j] = averageTemp/ITERATIONS;
     }
     
-    int averageSort[COLUMNS];
+    int averageSort[DATATYPES];
     averageTemp=0;
-    for(int j=0;j<COLUMNS;j++){
+    for(int j=0;j<DATATYPES;j++){
+        averageTemp=0;
         for(int i=0;i<ITERATIONS;i++){
             averageTemp+=data[1][j][i];
         }
@@ -128,9 +135,10 @@ int main() {
     }
     
 
-    int averageInsert[COLUMNS];
+    int averageInsert[DATATYPES];
     averageTemp=0;
-    for(int j=0;j<COLUMNS;j++){
+    for(int j=0;j<DATATYPES;j++){
+        averageTemp=0;
         for(int i=0;i<ITERATIONS;i++){
             averageTemp+=data[2][j][i];
         }
@@ -138,9 +146,10 @@ int main() {
     }
     
 
-    int averageDelete[COLUMNS];
+    int averageDelete[DATATYPES];
     averageTemp=0;
-    for(int j=0;j<COLUMNS;j++){
+    for(int j=0;j<DATATYPES;j++){
+        averageTemp=0;
         for(int i=0;i<ITERATIONS;i++){
             averageTemp+=data[3][j][i];
         }
@@ -148,8 +157,24 @@ int main() {
   }
 
     cout<<"Number of simulations: "<<ITERATIONS<<endl;
-    cout<<setw(SETWIDTH)<<"Vector"<<setw(SETWIDTH)<<"List"<<setw(SETWIDTH)<<"Set";
-    cout<<endl<<left<<setw(SETWIDTH)<<"Read:"<<averageRead[0]<<setw(SETWIDTH)<<averageRead[1]<<setw(SETWIDTH)<<averageRead[2]<<endl;
+    cout<<setw(SETWIDTH*2)<<"Vector"<<setw(SETWIDTH)<<"List"<<setw(SETWIDTH)<<"Set";
+    cout<<endl<<left<<setw(SETWIDTH)<<"Read:"<<right;
+    for(int i=0;i<DATATYPES;i++){
+        cout<<setw(SETWIDTH)<<averageRead[i];
+    }
+    cout<<endl<<left<<setw(SETWIDTH)<<"Sort:"<<right;
+    for(int i=0;i<DATATYPES;i++){
+        cout<<setw(SETWIDTH)<<averageSort[i];
+    }
+    cout<<endl<<left<<setw(SETWIDTH)<<"Insert:"<<right;
+    for(int i=0;i<DATATYPES;i++){
+        cout<<setw(SETWIDTH)<<averageInsert[i];
+    }
+    cout<<endl<<left<<setw(SETWIDTH)<<"Delete:"<<right;
+    for(int i=0;i<DATATYPES;i++){
+        cout<<setw(SETWIDTH)<<averageDelete[i];
+    }
+
     return 0;
 }
 
