@@ -12,9 +12,7 @@
 using namespace std;
 using namespace std::chrono;
 
-const int SETWIDTH = 15,OPERATIONS = 4, DATATYPES = 3,ITERATIONS = 3; //Set to 3 to debug, change to 15 afterwards, 
-
-int averageRead(int input[],int size);
+const int SETWIDTH = 15,OPERATIONS = 4, DATATYPES = 3,ITERATIONS = 15;
 
 int main() {
     int data[OPERATIONS][DATATYPES][ITERATIONS];   //make 3d arr
@@ -23,8 +21,9 @@ int main() {
     vector <string> vector1;
     list <string> list1;
 
+    //Run Tests and Gather Data =========================================
     for (int i=0;i<ITERATIONS;i++){
-        //reading =========================================
+        //reading ====================
         fstream fin("codes.txt");
         string input;
         //vector
@@ -56,7 +55,7 @@ int main() {
         fin.seekp(0, std::ios::beg); 
         
 
-        //sorting ==============================================
+        //sorting ====================
         //vector
         start = high_resolution_clock::now();
         sort(vector1.begin(), vector1.end());
@@ -71,7 +70,7 @@ int main() {
         data[1][2][i]= duration_cast<microseconds>(end - start).count();
 
 
-        //insert ==============================================
+        //insert ====================
         //vector
         start = chrono::high_resolution_clock::now();
         vector1.insert(vector1.begin(), vector1.size()/2, "insertedVal");
@@ -88,7 +87,7 @@ int main() {
         end = high_resolution_clock::now();
         data[2][2][i]= duration_cast<microseconds>(end - start).count();
 
-        //delete ==============================================
+        //delete ====================
         //vector
         auto itv = vector1.begin();
         advance(itv,vector1.size()/2);
@@ -110,6 +109,7 @@ int main() {
         set1.erase(its);
         end = high_resolution_clock::now();
     }
+
     //Averaging Data ===========================================
     int averageData[OPERATIONS][DATATYPES];
     int averageTemp=0;
@@ -122,98 +122,33 @@ int main() {
             }
             averageData[h][j] = averageTemp/ITERATIONS;
         }
-    /*
-    for(int j=0;j<DATATYPES;j++){
-        averageTemp=0;
-        for(int i=0;i<ITERATIONS;i++){
-            averageTemp+=data[0][j][i];
-        }
-        averageRead[j] = averageTemp/ITERATIONS;
-    }
     
-    int averageSort[DATATYPES];
-    averageTemp=0;
-    for(int j=0;j<DATATYPES;j++){
-        averageTemp=0;
-        for(int i=0;i<ITERATIONS;i++){
-            averageTemp+=data[1][j][i];
-        }
-        averageSort[j] = averageTemp/ITERATIONS;
-    }
-    
-
-    int averageInsert[DATATYPES];
-    averageTemp=0;
-    for(int j=0;j<DATATYPES;j++){
-        averageTemp=0;
-        for(int i=0;i<ITERATIONS;i++){
-            averageTemp+=data[2][j][i];
-        }
-        averageInsert[j] = averageTemp/ITERATIONS;
-    }
-    
-
-    int averageDelete[DATATYPES];
-    averageTemp=0;
-    for(int j=0;j<DATATYPES;j++){
-        averageTemp=0;
-        for(int i=0;i<ITERATIONS;i++){
-            averageTemp+=data[3][j][i];
-        }
-        averageDelete[j] = averageTemp/ITERATIONS;
-  }
-*/
+    //Outputting Data ===========================================
     cout<<"Number of simulations: "<<ITERATIONS<<endl;
     cout<<setw(SETWIDTH*2)<<"Vector"<<setw(SETWIDTH)<<"List"<<setw(SETWIDTH)<<"Set";
-    cout<<endl<<left<<setw(SETWIDTH)<<"Read:"<<right;
+    cout<<endl<<left<<setw(SETWIDTH);
     for(int j=0;j<OPERATIONS;j++){
+        switch (j){
+        case 0:
+            cout<<"Read:"<<right;
+            break;
+        case 1:
+            cout<<"Sort:"<<right;
+            break;
+        case 2:
+            cout<<"Insert:"<<right;
+            break;
+        case 3:
+            cout<<"Delete:"<<right;
+            break;
+        }
         for(int i=0;i<DATATYPES;i++){
             cout<<setw(SETWIDTH)<<averageData[j][i];
         }
     cout<<endl<<left<<setw(SETWIDTH);
-    switch (j){
-    case 1:
-        cout<<"Sort:"<<right;
-        break;
-    case 2:
-        cout<<"Insert:"<<right;
-        break;
-    case 3:
-        cout<<"Delete:"<<right;
-        break;
     }
-    }
-
-   /* 
-    for(int i=0;i<DATATYPES;i++){
-        cout<<setw(SETWIDTH)<<averageRead[i];
-    }
-    cout<<endl<<left<<setw(SETWIDTH)<<"Sort:"<<right;
-    for(int i=0;i<DATATYPES;i++){
-        cout<<setw(SETWIDTH)<<averageSort[i];
-    }
-    cout<<endl<<left<<setw(SETWIDTH)<<"Insert:"<<right;
-    for(int i=0;i<DATATYPES;i++){
-        cout<<setw(SETWIDTH)<<averageInsert[i];
-    }
-    cout<<endl<<left<<setw(SETWIDTH)<<"Delete:"<<right;
-    for(int i=0;i<DATATYPES;i++){
-        cout<<setw(SETWIDTH)<<averageDelete[i];
-    }*/
-
-    //debug:
-    cout<<endl<<endl<<data[3][0][2];
-
 
     return 0;
-}
-
-int average(int input[],int size){
-    int sum=0;
-    for(int i;i<size;i++){
-        sum+=input[i];
-    }
-    return sum/(size+1);
 }
 
 /* syntax examples:
