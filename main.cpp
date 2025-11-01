@@ -110,12 +110,19 @@ int main() {
         set1.erase(its);
         end = high_resolution_clock::now();
     }
-
-
-
-
-    int averageRead[DATATYPES];
+    //Averaging Data ===========================================
+    int averageData[OPERATIONS][DATATYPES];
     int averageTemp=0;
+
+    for (int h=0;h<OPERATIONS;h++)
+        for(int j=0;j<DATATYPES;j++){
+            averageTemp=0;
+            for(int i=0;i<ITERATIONS;i++){
+                averageTemp+=data[h][j][i];
+            }
+            averageData[h][j] = averageTemp/ITERATIONS;
+        }
+    /*
     for(int j=0;j<DATATYPES;j++){
         averageTemp=0;
         for(int i=0;i<ITERATIONS;i++){
@@ -142,7 +149,7 @@ int main() {
         for(int i=0;i<ITERATIONS;i++){
             averageTemp+=data[2][j][i];
         }
-        averageSort[j] = averageTemp/ITERATIONS;
+        averageInsert[j] = averageTemp/ITERATIONS;
     }
     
 
@@ -153,12 +160,31 @@ int main() {
         for(int i=0;i<ITERATIONS;i++){
             averageTemp+=data[3][j][i];
         }
-        averageSort[j] = averageTemp/ITERATIONS;
+        averageDelete[j] = averageTemp/ITERATIONS;
   }
-
+*/
     cout<<"Number of simulations: "<<ITERATIONS<<endl;
     cout<<setw(SETWIDTH*2)<<"Vector"<<setw(SETWIDTH)<<"List"<<setw(SETWIDTH)<<"Set";
     cout<<endl<<left<<setw(SETWIDTH)<<"Read:"<<right;
+    for(int j=0;j<OPERATIONS;j++){
+        for(int i=0;i<DATATYPES;i++){
+            cout<<setw(SETWIDTH)<<averageData[j][i];
+        }
+    cout<<endl<<left<<setw(SETWIDTH);
+    switch (j){
+    case 1:
+        cout<<"Sort:"<<right;
+        break;
+    case 2:
+        cout<<"Insert:"<<right;
+        break;
+    case 3:
+        cout<<"Delete:"<<right;
+        break;
+    }
+    }
+
+   /* 
     for(int i=0;i<DATATYPES;i++){
         cout<<setw(SETWIDTH)<<averageRead[i];
     }
@@ -173,7 +199,11 @@ int main() {
     cout<<endl<<left<<setw(SETWIDTH)<<"Delete:"<<right;
     for(int i=0;i<DATATYPES;i++){
         cout<<setw(SETWIDTH)<<averageDelete[i];
-    }
+    }*/
+
+    //debug:
+    cout<<endl<<endl<<data[3][0][2];
+
 
     return 0;
 }
@@ -185,11 +215,7 @@ int average(int input[],int size){
     }
     return sum/(size+1);
 }
-/*
-int averageRead(int input[],int size){
-    return average(input[],size);
-}
-*/
+
 /* syntax examples:
 auto start = high_resolution_clock::now()
 auto end = high_resolution_clock::now()
